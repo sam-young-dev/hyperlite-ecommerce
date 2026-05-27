@@ -1,0 +1,28 @@
+---
+import BrandExploded from '../../assets/brand-exploded.svg?raw';
+
+const data = {
+  navItems: [
+    { label: 'Home', href: '/', current: true },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' },
+  ],
+};
+---
+
+<div class="closer">
+  <div class="wrapper flow">
+    <span set:html={BrandExploded}></span>
+    {data.navItems.length > 0 && (
+      <nav aria-label="{{ data.navLabel }}" class="nav">
+        <ul class="cluster" role="list">
+          {data.navItems.map((item) => (
+            <li>
+              <a href={item.href} {...(item.current ? {'aria-current': 'page'} : {})}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )}
+  </div>
+</div>

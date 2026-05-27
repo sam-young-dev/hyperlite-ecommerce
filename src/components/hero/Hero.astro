@@ -1,0 +1,15 @@
+---
+import ArrowDownIcon from '/src/assets/arrow-down.svg?raw';
+
+const data = {
+  label: 'View Content',
+  href: '#content',
+}
+---
+<div class="hero">
+  <img src="/src/assets/hero.jpg" alt="Hero Image" draggable="false" />
+  <a href={data.href} class="hero__skip-link flow">
+    <span class="hero__skip-link-icon"><div class="hero__skip-link-icon__inner" set:html={ArrowDownIcon}></div></span>
+    <span class="hero__skip-link-label">{data.label}</span>
+  </a>
+</div>

@@ -1,0 +1,17 @@
+.closer {
+  background: var(--color-primary);
+  color: var(--color-stone-100);
+  padding-block: clamp(10rem, 50vb, 20rem) var(--gutter);
+  font-weight: var(--font-bold);
+  padding-top: clamp(2rem, 50vb, 8rem);
+  padding-bottom: 2rem;
+}
+
+.closer svg[role="img"][width][height] {
+  --color-svg-fill: var(--color-stone-100);
+  --color-svg-stroke: var(--color-stone-100);
+  width: 100%;
+  height: auto;
+  background: unset;
+  padding: unset;
+}

@@ -1,0 +1,23 @@
+---
+import MastheadLogoLeft from "../../assets/brand-left.svg?raw";
+import MastheadLogoRight from "../../assets/brand-right.svg?raw";
+import BrandExploded from '../../assets/brand-exploded.svg?raw';
+
+const data = {
+  heading: "Barista Academy",
+  location: "London, UK",
+  meta: "~ Established 2024 ~",
+};
+---
+
+<div class="masthead__logo" aria-hidden="true">
+  <span set:html={BrandExploded}></span>
+</div>
+<div class="masthead">
+  <h1 class="masthead__heading">{ data.heading }</h1>
+  <p class="masthead__location">{ data.location }</p>
+  <p class="masthead__meta">{ data.meta }</p>
+  <!-- <div class="masthead__logo" aria-hidden="true">
+    BLOOM
+  </div> -->
+</div>

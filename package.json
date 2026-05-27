@@ -13,5 +13,9 @@
   },
   "dependencies": {
     "astro": "^6.3.3"
+  },
+  "devDependencies": {
+    "@sugarcube-sh/cli": "^0.1.12",
+    "@sugarcube-sh/vite": "^0.1.13"
   }
 }

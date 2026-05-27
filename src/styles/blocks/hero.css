@@ -30,7 +30,7 @@
 }
 
 .hero__skip-link {
-  --skip-link-color: var(--color-primary);
+  --skip-link-color: var(--color-brand-primary);
   --flow-space: var(--space-xs);
 
   grid-column: 1;

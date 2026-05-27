@@ -21,7 +21,3 @@
 @import "./blocks/closer.css";
 @import "./blocks/button.css";
 @import "./blocks/masthead.css";
-
-.welcome {
-  /* background-color: var(--color-stone-100); */
-}

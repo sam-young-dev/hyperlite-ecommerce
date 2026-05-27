@@ -2,27 +2,16 @@
   "color": {
     "$type": "color",
 
-    "primary": {
-      "$value": "#3358D4"
-    },
-    "dark": {
-      "$value": "#171406"
-    },
-    "dark glare": {
-      "$value": "#2d2816"
-    },
-    "mid": {
-      "$value": "#ABA9A2"
-    },
-    "light": {
-      "$value": "#ffffff"
-    },
-
-    "svg-fill": {
-      "$value": "#3358D4"
-    },
-    "svg-stroke": {
-      "$value": "#3358D4"
+    "brand": {
+      "primary": {
+        "$value": "#3358D4"
+      },
+      "dark": {
+        "$value": "#171406"
+      },
+      "light": {
+        "$value": "#ffffff"
+      }
     },
 
     "surface": {
@@ -359,6 +348,61 @@
     },
     "overlay": {
       "$value": "{color.alpha.black.50}"
+    },
+
+    "interactive": {
+      "fill": {
+        "default": {
+          "$value": "{color.brand.primary}"
+        },
+        "hover": {
+          "$value": "{color.brand.primary}"
+        },
+        "active": {
+          "$value": "{color.brand.primary}"
+        }
+      },
+      "text": {
+        "default": {
+          "$value": "{color.white}"
+        }
+      }
+    },
+
+    "background": {
+      "base": {
+        "$value": "{color.stone.100}"
+      },
+      "surface": {
+        "$value": "{color.surface.default}"
+      },
+      "elevated": {
+        "$value": "{color.surface.raised}"
+      }
+    },
+
+    "foreground": {
+      "primary": {
+        "$value": "{color.text.normal}"
+      },
+      "secondary": {
+        "$value": "{color.text.quiet}"
+      },
+      "tertiary": {
+        "$value": "{color.text.quieter}"
+      },
+      "inverse": {
+        "$value": "{color.white}"
+      }
+    },
+
+    "decorative": {
+      "stroke": {
+        "$value": "{color.border.normal}"
+      },
+      "fill": {
+        "$value": "{color.fill.normal}"
+      }
     }
   }
 }

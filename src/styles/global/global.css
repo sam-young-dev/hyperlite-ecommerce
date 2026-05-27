@@ -7,8 +7,8 @@
 
 body {
   /* background: var(--color-dark); */
-  background: var(--color-stone-100);
-  color: var(--color-primary);
+  background: var(--color-background-base);
+  color: var(--color-brand-primary);
   font-size: var(--size-step-1);
   font-family: var(--font-base);
   line-height: var(--leading-standard);
@@ -55,8 +55,8 @@ small {
 
 ins {
   text-decoration: none;
-  background: var(--color-primary);
-  color: var(--color-dark);
+  background: var(--color-interactive-fill-default);
+  color: var(--color-foreground-inverse);
   padding-inline: 0.3em;
 }
 
@@ -152,12 +152,12 @@ dd {
 
 blockquote {
   margin-inline: 0;
-  color: var(--color-light);
+  color: var(--color-foreground-inverse);
 }
 
 blockquote footer {
   margin-block-start: var(--space-s);
-  color: var(--color-primary);
+  color: var(--color-brand-primary);
   font-size: var(--size-step-0);
 }
 
@@ -261,8 +261,8 @@ a:not([class]):hover {
 }
 
 ::selection {
-  color: var(--color-dark);
-  background: var(--color-light);
+  color: var(--color-brand-dark);
+  background: var(--color-brand-light);
 }
 
 hr {
@@ -283,7 +283,7 @@ svg {
 svg[role="img"][width][height] {
   width: revert;
   height: revert;
-  background: var(--color-light);
+  background: var(--color-brand-light);
   padding: var(--space-xs);
 }
 
@@ -293,7 +293,7 @@ form > * + * {
 }
 
 :is(input, select, textarea) {
-  accent-color: var(--color-primary);
+  accent-color: var(--color-brand-primary);
 }
 
 :is(
@@ -304,12 +304,12 @@ form > * + * {
   padding: 0.5em 0.8em;
   border-radius: var(--radius-s);
   border: var(--stroke-solid);
-  background: var(--color-dark-glare);
-  color: var(--color-light);
+  background: var(--color-fill-loud);
+  color: var(--color-foreground-inverse);
   width: 100%;
 
   &::placeholder {
-    color: var(--color-mid);
+    color: var(--color-text-placeholder);
     opacity: 1;
   }
 }
@@ -342,7 +342,7 @@ label:has(input) input {
 }
 
 input:disabled {
-  background: var(--color-mid);
+  background: var(--color-fill-normal);
 }
 
 input:disabled,

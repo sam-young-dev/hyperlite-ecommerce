@@ -6,14 +6,18 @@
 */
 
 body {
-  /* background: var(--color-dark); */
   background: var(--color-background-base);
   color: var(--color-brand-primary);
   font-size: var(--size-step-1);
   font-family: var(--font-base);
   line-height: var(--leading-standard);
   font-size-adjust: from-font;
+  min-height: 100dvh;
   margin: 0;
+
+  display: grid;
+  /* Header is auto-sized, Main takes remaining space (1fr), Footer is auto-sized */
+  grid-template-rows: auto 1fr auto;
 }
 
 :is(h1, h2, h3, h4) {

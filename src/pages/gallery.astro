@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import { sanityClient, urlFor } from '../lib/sanity';
+import type { Painting } from '../types/painting';
+
+const paintings = await sanityClient.fetch<Painting[]>(`
+  *[_type == "painting" && sold == false] | order(_createdAt desc) {
+    _id,
+    title,
+    slug,
+    mainImage,
+    price,
+    medium,
+    dimensions
+  }
+`);
+---
+
+<BaseLayout title="Gallery - All Paintings" descrtiption="Browse all available original paintings">
+  <div class="wrapper flow">
+    <h1>Gallery</h1>
+    <p class="subtitle">{paintings.length} paintings available</p>
+    
+    <div class="grid-auto">
+      {paintings.map((painting: Painting) => (
+        <a href={`/gallery/${painting.slug.current}`} class="painting-card flow">
+          <div class="image-container">
+            <img
+              src={urlFor(painting. mainImage).width(500).height(500).url()}
+              alt={painting.title}
+              loading="lazy"
+            />
+          </div>
+          <div class="painting-info flow">
+            <h2>{painting.title}</h2>
+            {painting.medium && <p class="medium">{painting.medium}</p>}
+            {painting.dimensions && (
+              <p class="dimensions">
+                {painting.dimensions.width}" x {painting.dimensions.height}"
+              </p>
+            )}
+            <p class="price">${painting.price}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

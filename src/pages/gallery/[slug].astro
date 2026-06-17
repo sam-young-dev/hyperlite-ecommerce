@@ -1,0 +1,110 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import { sanityClient, urlFor } from '../../lib/sanity';
+import type { Painting } from '../../types/painting';
+
+export async function getStaticPaths() {
+  const paintings = await sanityClient.fetch<Painting[]>(`
+    *[_type == "painting"] {
+      slug
+    }
+  `);
+  
+  return paintings.map((painting: Painting) => ({
+    params: { slug: painting.slug.current },
+  }));
+}
+
+const { slug } = Astro.params;
+
+const painting = await sanityClient. fetch<Painting>(
+  `*[_type == "painting" && slug. current == $slug][0] {
+    _id,
+    title,
+    slug,
+    mainImage,
+    gallery,
+    description,
+    price,
+    medium,
+    dimensions,
+    year,
+    sold,
+    stripePaymentLink
+  }`,
+  { slug }
+);
+
+if (!painting) {
+  return Astro.redirect('/gallery');
+}
+---
+
+<BaseLayout title={`${painting.title} - Art Gallery`} description={painting.description}>
+  <div class="product-container wrapper">
+    <div class="image-section">
+      <img
+        src={urlFor(painting.mainImage).width(800).url()}
+        alt={painting.title}
+        class="main-image"
+      />
+      
+      {painting.gallery && painting.gallery.length > 0 && (
+        <div class="gallery-images">
+          {painting.gallery.map((image: any) => (
+            <img
+              src={urlFor(image).width(200).url()}
+              alt={`${painting.title} detail`}
+              class="gallery-thumb"
+            />
+          ))}
+        </div>
+      )}
+    </div>
+    
+    <div class="region flow">
+      <h1>{painting.title}</h1>
+      
+      <div class="metadata">
+        {painting.medium && <p><strong>Medium:</strong> {painting.medium}</p>}
+        {painting.dimensions && (
+          <p>
+            <strong>Dimensions: </strong> {painting.dimensions.width}" × {painting.dimensions.height}"
+          </p>
+        )}
+        {painting.year && <p><strong>Year:</strong> {painting.year}</p>}
+      </div>
+      
+      {painting.description && (
+        <div class="description">
+          <h2>About this piece</h2>
+          <p>{painting.description}</p>
+        </div>
+      )}
+      
+      <div class="purchase-section flow">
+        <p class="price">${painting.price}</p>
+        
+        {painting.sold ?  (
+          <button disabled class="sold-button">Sold</button>
+        ) : painting.stripePaymentLink ?  (
+          //             data-item-image={painting.gallery?.[0]}
+          <button
+            class="button snipcart-add-item"
+            data-item-id={painting._id}
+            data-item-price={painting.price}
+            data-item-description={painting?.description}
+            data-item-name={painting.title}
+          >
+            Add to cart
+          </button>
+        ) : (
+          <p class="contact-note">Contact for purchase details</p>
+        )}
+      </div>
+      
+      <a href="/gallery" class="back-link">← Back to Gallery</a>
+    </div>
+  </div>
+</BaseLayout>

@@ -26,9 +26,3 @@
   --flow-space: var(--space-md);
   --hr-stroke: var(--stroke-width) solid var(--color-brand-primary);
 }
-
-@container site-head-brand (68vi <= width <= 50rem) {
-  .site-head__brand a {
-    color: var(--color-foreground-inverse);
-  }
-}

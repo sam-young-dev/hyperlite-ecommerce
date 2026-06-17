@@ -3,9 +3,23 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Masthead from '../components/masthead/Masthead.astro';
 import Hero from '../components/hero/Hero.astro';
 import Closer from '../components/closer/Closer.astro';
+
+import { sanityClient, urlFor } from '../lib/sanity';
+import type { Painting } from '../types/painting';
+
+const featuredPaintings = await sanityClient. fetch<Painting[]>(`
+  *[_type == "painting" && featured == true && sold == false] | order(_createdAt desc) [0... 3] {
+    _id,
+    title,
+    slug,
+    mainImage,
+    price,
+    medium
+  }
+`);
 ---
 
-<BaseLayout>
+<BaseLayout title="Art Gallery - Original Paintings">
 	<div class="region flow">
 		<div class="wrapper">
 			<Masthead />
@@ -14,12 +28,25 @@ import Closer from '../components/closer/Closer.astro';
 	</div>
 	
 	<div class="region wrapper" id="content">
-		<div class="prose">
-			<h1>Astro Starter!</h1>
-			<p>This is some content here</p>
-			<button class="button">Test</button>
-			<button class="button" data-button-variant="secondary">Test</button>
-		</div>
+		{featuredPaintings.length > 0 && (
+			<section class="featured">
+				<h2>Featured Works</h2>
+				<div class="grid-auto">
+					{featuredPaintings.map((painting: Painting) => (
+						<a href={`/gallery/${painting.slug.current}`} class="featured-card flow">
+							<img
+								src={urlFor(painting.mainImage).width(600).height(600).url()}
+								alt={painting.title}
+								loading="lazy"
+							/>
+							<h3>{painting.title}</h3>
+							<p class="medium">{painting.medium}</p>
+							<p class="price">${painting.price}</p>
+						</a>
+					))}
+				</div>
+			</section>
+		)}
 	</div>
 	
 	<Closer />

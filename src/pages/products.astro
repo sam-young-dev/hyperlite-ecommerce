@@ -24,7 +24,7 @@ const paintings = await sanityClient.fetch<Painting[]>(`
     <h1>Gallery</h1>
     
     <div class="grid-auto">
-      {paintings.map((painting: Painting) => {
+      {paintings.map((painting: Painting, i) => {
         return (<Card href={`/product/${painting.slug.current}`} label={painting.title}>
           <div class="image-container">
             <Image
@@ -32,6 +32,8 @@ const paintings = await sanityClient.fetch<Painting[]>(`
               alt={painting.title}
               width={800}
               height={800}
+              loading={i < 4 ? "eager" : null}
+              fetchpriority={i < 4 ? "high" : undefined}
             />
           </div>
           <div class="painting-info flow">

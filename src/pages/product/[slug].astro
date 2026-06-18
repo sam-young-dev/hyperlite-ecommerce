@@ -46,14 +46,37 @@ if (!painting) {
 <BaseLayout title={`${painting.title} - Art Gallery`} description={painting.description}>
   <div class="">
     <div class="image-section">
-      <Image
+      <ul class="slider">
+        <li data-accName="Item 1" class="slider-item">
+          <Image
         src={urlFor(painting.mainImage).width(1500).height(800).url()}
         alt={painting.title}
         width={1500}
         height={800}
+        loading="eager"
+        fetchpriority="high"
       />
+        </li>
+        {painting.gallery && painting.gallery.length > 0 && painting.gallery.map((image: any) => (
+          <li data-accName={painting.title} class="slider-item">
+            <Image
+              src={urlFor(image).width(1500).height(800).url()}
+              alt={`${painting.title} detail`}
+              width={1500}
+              height={800}
+            />
+          </li>
+          ))}
+      </ul>
+
+      <!-- <Image
+        src={urlFor(painting.mainImage).width(1500).height(800).url()}
+        alt={painting.title}
+        width={1500}
+        height={800}
+      /> -->
       
-      {painting.gallery && painting.gallery.length > 0 && (
+      <!-- {painting.gallery && painting.gallery.length > 0 && (
         <div class="gallery-images">
           {painting.gallery.map((image: any) => (
             <Image
@@ -64,7 +87,7 @@ if (!painting) {
             />
           ))}
         </div>
-      )}
+      )} -->
     </div>
     
     <div class="wrapper region flow">
@@ -105,7 +128,9 @@ if (!painting) {
           </button>}
       </div>
       
-      <a href="/products" class="back-link">← Back to Gallery</a>
+      <div>
+        <a href="/products" class="back-link">← Back to Gallery</a>
+      </div>
     </div>
   </div>
 </BaseLayout>

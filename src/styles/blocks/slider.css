@@ -1,7 +1,5 @@
 .slider {
-  /* width: 100vw; */
   min-width: 100%;
-  min-height: 100%;
   padding: 0;
   margin: 0;
   display: flex;
@@ -10,6 +8,7 @@
   scroll-snap-type: x mandatory;
   anchor-name: --my-carousel;
   scroll-marker-group: after;
+  aspect-ratio: 1500 / 800;
 }
 
 .slider::scroll-button(*) {
@@ -87,4 +86,8 @@
   background-color: var(--color-stone-800);
   border: 1px solid var(--color-stone-100);
   mix-blend-mode: difference;
+}
+
+.slider:has(.slider-item:only-child) {
+  scroll-marker-group: none;
 }

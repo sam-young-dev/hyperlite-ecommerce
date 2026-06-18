@@ -53,6 +53,8 @@ if (!painting) {
         alt={painting.title}
         width={1500}
         height={800}
+        loading="eager"
+        fetchpriority="high"
       />
         </li>
         {painting.gallery && painting.gallery.length > 0 && painting.gallery.map((image: any) => (

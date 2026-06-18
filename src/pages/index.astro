@@ -40,6 +40,8 @@ const featuredPaintings = await sanityClient. fetch<Painting[]>(`
 							loading="lazy"
 							width={800}
 							height={800}
+							loading="eager"
+        			fetchpriority="high"
 						/>
 						<h3>{painting.title}</h3>
 						<p class="medium">{painting.medium}</p>

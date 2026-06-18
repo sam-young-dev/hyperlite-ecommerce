@@ -1,4 +1,6 @@
 ---
+// import { Image } from 'astro:assets';
+import { Image } from "@unpic/astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 import { sanityClient, urlFor } from '../../lib/sanity';
@@ -39,31 +41,34 @@ const painting = await sanityClient. fetch<Painting>(
 if (!painting) {
   return Astro.redirect('/gallery');
 }
+
 ---
 
 <BaseLayout title={`${painting.title} - Art Gallery`} description={painting.description}>
-  <div class="product-container wrapper">
+  <div class="">
     <div class="image-section">
-      <img
-        src={urlFor(painting.mainImage).width(800).url()}
+      <Image
+        src={urlFor(painting.mainImage).url()}
         alt={painting.title}
-        class="main-image"
+        width={1500}
+        height={800}
       />
       
       {painting.gallery && painting.gallery.length > 0 && (
         <div class="gallery-images">
           {painting.gallery.map((image: any) => (
-            <img
-              src={urlFor(image).width(200).url()}
+            <Image
+              src={urlFor(image).width(100).height(100).url()}
               alt={`${painting.title} detail`}
-              class="gallery-thumb"
+              width={100}
+              height={100}
             />
           ))}
         </div>
       )}
     </div>
     
-    <div class="region flow">
+    <div class="wrapper region flow">
       <h1>{painting.title}</h1>
       
       <div class="metadata">
@@ -88,23 +93,20 @@ if (!painting) {
         
         {painting.sold ?  (
           <button disabled class="sold-button">Sold</button>
-        ) : painting.stripePaymentLink ?  (
-          //             data-item-image={painting.gallery?.[0]}
+        ) :
           <button
             class="button snipcart-add-item"
             data-item-id={painting._id}
             data-item-price={painting.price}
+            data-item-image={painting?.mainImage ? urlFor(painting?.mainImage).url() : ""}
             data-item-description={painting?.description}
             data-item-name={painting.title}
           >
             Add to cart
-          </button>
-        ) : (
-          <p class="contact-note">Contact for purchase details</p>
-        )}
+          </button>}
       </div>
       
-      <a href="/gallery" class="back-link">← Back to Gallery</a>
+      <a href="/products" class="back-link">← Back to Gallery</a>
     </div>
   </div>
 </BaseLayout>

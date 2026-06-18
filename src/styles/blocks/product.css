@@ -1,0 +1,4 @@
+.image-section {
+  display: grid;
+  place-items: center;
+}

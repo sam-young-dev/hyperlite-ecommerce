@@ -16,6 +16,7 @@
   container-name: site-head-brand;
   flex-basis: clamp(25ch, 60%, 50rem);
   flex-grow: 1;
+  font-weight: var(--font-weight-bold);
 }
 
 .site-head__brand a:not(:hover) {
@@ -23,6 +24,6 @@
 }
 
 .site-head hr {
-  --flow-space: var(--space-md);
+  --flow-space: var(--space-xs);
   --hr-stroke: var(--stroke-width) solid var(--color-brand-primary);
 }

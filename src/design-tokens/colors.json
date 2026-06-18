@@ -371,7 +371,7 @@
 
     "background": {
       "base": {
-        "$value": "{color.stone.100}"
+        "$value": "{color.stone.50}"
       },
       "surface": {
         "$value": "{color.surface.default}"

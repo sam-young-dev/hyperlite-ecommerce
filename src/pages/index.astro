@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Image } from "@unpic/astro";
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Masthead from '../components/masthead/Masthead.astro';
 import Hero from '../components/hero/Hero.astro';
@@ -36,11 +36,11 @@ const featuredPaintings = await sanityClient. fetch<Painting[]>(`
 				{featuredPaintings.map((painting: Painting) => (
 					<Card href={`/product/${painting.slug.current}`} label={painting.title}>
 						<Image
-							src={urlFor(painting.mainImage).width(600).height(600).url()}
+							src={urlFor(painting.mainImage).url()}
 							alt={painting.title}
 							loading="lazy"
-							width="600"
-							height="600"
+							width={800}
+							height={800}
 						/>
 						<h3>{painting.title}</h3>
 						<p class="medium">{painting.medium}</p>

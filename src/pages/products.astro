@@ -28,7 +28,7 @@ const paintings = await sanityClient.fetch<Painting[]>(`
         return (<Card href={`/product/${painting.slug.current}`} label={painting.title}>
           <div class="image-container">
             <Image
-              src={urlFor(painting.mainImage).url()}
+              src={urlFor(painting.mainImage).width(800).height(800).url()}
               alt={painting.title}
               width={800}
               height={800}

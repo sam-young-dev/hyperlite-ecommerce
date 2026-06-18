@@ -36,7 +36,7 @@ const featuredPaintings = await sanityClient. fetch<Painting[]>(`
 				{featuredPaintings.map((painting: Painting) => (
 					<Card href={`/product/${painting.slug.current}`} label={painting.title}>
 						<Image
-							src={urlFor(painting.mainImage).url()}
+							src={urlFor(painting.mainImage).width(800).height(800).url()}
 							alt={painting.title}
 							loading="lazy"
 							width={800}

@@ -1,8 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Masthead from '../components/masthead/Masthead.astro';
 import Hero from '../components/hero/Hero.astro';
 import Closer from '../components/closer/Closer.astro';
+import Card from '../components/card/Card.astro';
 
 import { sanityClient, urlFor } from '../lib/sanity';
 import type { Painting } from '../types/painting';
@@ -19,33 +21,33 @@ const featuredPaintings = await sanityClient. fetch<Painting[]>(`
 `);
 ---
 
-<BaseLayout title="Art Gallery - Original Paintings">
+<BaseLayout title="Art Gallery - Original Paintings" description="Art gallery home page">
 	<div class="region flow">
 		<div class="wrapper">
 			<Masthead />
 		</div>
-		<Hero />
+		<!-- <Hero /> -->
 	</div>
 	
-	<div class="region wrapper" id="content">
+	<div class="region wrapper flow" id="content">
 		{featuredPaintings.length > 0 && (
-			<section class="featured">
-				<h2>Featured Works</h2>
-				<div class="grid-auto">
-					{featuredPaintings.map((painting: Painting) => (
-						<a href={`/gallery/${painting.slug.current}`} class="featured-card flow">
-							<img
-								src={urlFor(painting.mainImage).width(600).height(600).url()}
-								alt={painting.title}
-								loading="lazy"
-							/>
-							<h3>{painting.title}</h3>
-							<p class="medium">{painting.medium}</p>
-							<p class="price">${painting.price}</p>
-						</a>
-					))}
-				</div>
-			</section>
+			<h2>Featured Works</h2>
+			<div class="grid-auto">
+				{featuredPaintings.map((painting: Painting) => (
+					<Card href={`/product/${painting.slug.current}`} label={painting.title}>
+						<Image
+							src={urlFor(painting.mainImage).width(600).height(600).url()}
+							alt={painting.title}
+							loading="lazy"
+							width="600"
+							height="600"
+						/>
+						<h3>{painting.title}</h3>
+						<p class="medium">{painting.medium}</p>
+						<p class="price">${painting.price}</p>
+					</Card>
+				))}
+			</div>
 		)}
 	</div>
 	

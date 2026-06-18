@@ -1,6 +1,9 @@
 export const siteData = {
   title: "Sam Studio",
-  navItems: [{ label: "Gallery", href: "/gallery", current: false }],
+  navItems: [
+    { label: "Gallery", href: "/products", current: false },
+    { label: "About", href: "/about" },
+  ],
   heroIcon: {
     label: "View Paintings",
     href: "#content",

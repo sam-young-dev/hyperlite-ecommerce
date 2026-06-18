@@ -1,5 +1,8 @@
 ---
+// import { Image } from "astro:assets";
+import { Image } from "@unpic/astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from '../components/card/Card.astro';
 
 import { sanityClient, urlFor } from '../lib/sanity';
 import type { Painting } from '../types/painting';
@@ -17,19 +20,19 @@ const paintings = await sanityClient.fetch<Painting[]>(`
 `);
 ---
 
-<BaseLayout title="Gallery - All Paintings" descrtiption="Browse all available original paintings">
-  <div class="wrapper flow">
+<BaseLayout title="Gallery - All Paintings" description="Browse all available original paintings">
+  <div class="region wrapper flow">
     <h1>Gallery</h1>
-    <p class="subtitle">{paintings.length} paintings available</p>
     
     <div class="grid-auto">
-      {paintings.map((painting: Painting) => (
-        <a href={`/gallery/${painting.slug.current}`} class="painting-card flow">
+      {paintings.map((painting: Painting) => {
+        return (<Card href={`/product/${painting.slug.current}`} label={painting.title}>
           <div class="image-container">
-            <img
-              src={urlFor(painting. mainImage).width(500).height(500).url()}
+            <Image
+              src={urlFor(painting.mainImage).url()}
               alt={painting.title}
-              loading="lazy"
+              width={800}
+              height={800}
             />
           </div>
           <div class="painting-info flow">
@@ -42,8 +45,8 @@ const paintings = await sanityClient.fetch<Painting[]>(`
             )}
             <p class="price">${painting.price}</p>
           </div>
-        </a>
-      ))}
+        </Card>)
+      })}
     </div>
   </div>
 </BaseLayout>

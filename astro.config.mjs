@@ -11,10 +11,9 @@ export default defineConfig({
   },
   image: {
     domains: ["cdn.sanity.io"],
-    layout: "constrained",
     service: imageService({
       // This can usually be auto-detected
-      // fallbackService: "sanity",
+      fallbackService: "sharp",
       placeholder: "blurhash",
       // This is the default
       layout: "constrained",

@@ -1,12 +1,13 @@
 ---
 import { Image } from '@unpic/astro';
 import ArrowDownIcon from '/src/assets/arrow-down.svg?raw';
-import { siteData } from '../../data/site-data'
+import { siteData } from '../../data/site-data';
+import heroImage from '../../assets/hero.jpg';
 ---
 
 <div class="hero">
   <Image
-    src="/src/assets/hero.jpg"
+    src={heroImage}
     alt="hero banner"
     width={2000}
     height={1200}

@@ -308,8 +308,9 @@ form > * + * {
   padding: 0.5em 0.8em;
   border-radius: var(--radius-s);
   border: var(--stroke-solid);
-  background: var(--color-fill-loud);
-  color: var(--color-foreground-inverse);
+  /* background: var(--color-fill-quiet); */
+  background: white;
+  color: var(--color-foreground-secondary);
   width: 100%;
 
   &::placeholder {

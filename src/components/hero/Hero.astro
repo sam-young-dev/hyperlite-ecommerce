@@ -1,11 +1,19 @@
 ---
-import { Image } from 'astro:assets';
+import { Image } from '@unpic/astro';
 import ArrowDownIcon from '/src/assets/arrow-down.svg?raw';
 import { siteData } from '../../data/site-data'
 ---
 
 <div class="hero">
-  <Image src="/src/assets/hero.jpg" alt="Hero Image" draggable="false" width={1200} height={500} />
+  <Image
+    src="/src/assets/hero.jpg"
+    alt="hero banner"
+    width={2000}
+    height={1200}
+    loading="eager"
+    fetchpriority="high"
+    draggable="false"
+  />
   <a href={siteData.heroIcon.href} class="hero__skip-link flow">
     <span class="hero__skip-link-icon"><div class="hero__skip-link-icon__inner" set:html={ArrowDownIcon}></div></span>
     <span class="hero__skip-link-label">{siteData.heroIcon.label}</span>

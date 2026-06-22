@@ -25,7 +25,7 @@ const featuredPaintings = await sanityClient. fetch<Painting[]>(`
 		<div class="wrapper">
 			<Masthead />
 		</div>
-		<!-- <Hero /> -->
+		<Hero />
 	</div>
 	
 	<div class="region wrapper flow" id="content">
@@ -37,7 +37,6 @@ const featuredPaintings = await sanityClient. fetch<Painting[]>(`
 						<Image
 							src={urlFor(painting.mainImage).width(800).height(800).url()}
 							alt={painting.title}
-							loading="lazy"
 							width={800}
 							height={800}
 							loading="eager"

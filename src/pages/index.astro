@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Masthead from '../components/masthead/Masthead.astro';
 import Hero from '../components/hero/Hero.astro';
 import Card from '../components/card/Card.astro';
+import heroImage from '../assets/hero.jpg';
 
 import { sanityClient, urlFor } from '../lib/sanity';
 import type { Painting } from '../types/painting';
@@ -25,7 +26,7 @@ const featuredPaintings = await sanityClient. fetch<Painting[]>(`
 		<div class="wrapper">
 			<Masthead />
 		</div>
-		<Hero />
+		<Hero image={heroImage} showIcon={true} />
 	</div>
 	
 	<div class="region wrapper flow" id="content">

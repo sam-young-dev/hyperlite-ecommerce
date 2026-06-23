@@ -9,7 +9,7 @@ body {
   background: var(--color-background-base);
   color: var(--color-brand-primary);
   font-size: var(--size-step-1);
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   line-height: var(--leading-standard);
   font-size-adjust: from-font;
   min-height: 100dvh;

@@ -4,64 +4,93 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
 import { sanityClient, urlFor } from '../../lib/sanity';
 import type { Painting } from '../../types/painting';
+import { formatProductPrice } from '../../lib/currency';
 
 export async function getStaticPaths() {
-  const paintings = await sanityClient.fetch<Painting[]>(`
-    *[_type == "painting"] {
+  // const paintings = await sanityClient.fetch<Painting[]>(`
+  //   *[_type == "painting"] {
+  //     slug
+  //   }
+  // `);
+
+  const products = await sanityClient.fetch<any[]>(`
+    *[_type == "product"] {
       slug
     }
   `);
   
-  return paintings.map((painting: Painting) => ({
-    params: { slug: painting.slug.current },
+  return products.map((product: any) => ({
+    params: { slug: product.slug.current },
   }));
 }
 
 const { slug } = Astro.params;
 
-const painting = await sanityClient. fetch<Painting>(
-  `*[_type == "painting" && slug. current == $slug][0] {
+// const painting = await sanityClient. fetch<Painting>(
+//   `*[_type == "painting" && slug. current == $slug][0] {
+//     _id,
+//     title,
+//     slug,
+//     mainImage,
+//     gallery,
+//     description,
+//     price,
+//     medium,
+//     dimensions,
+//     year,
+//     sold,
+//     stripePaymentLink
+//   }`,
+//   { slug }
+// );
+
+// if (!painting) {
+//   return Astro.redirect('/products');
+// }
+
+const product = await sanityClient. fetch<any>(
+  `*[_type == "product" && slug. current == $slug][0] {
     _id,
     title,
     slug,
     mainImage,
     gallery,
-    description,
     price,
-    medium,
+    description,
+    weight,
     dimensions,
-    year,
-    sold,
-    stripePaymentLink
+    capacity,
+    inStock,
+    featured,
+    category
   }`,
   { slug }
 );
 
-if (!painting) {
-  return Astro.redirect('/gallery');
+if (!product) {
+  return Astro.redirect('/');
 }
-
 ---
 
-<BaseLayout title={`${painting.title} - Art Gallery`} description={painting.description}>
+<BaseLayout title={`${product.title} - ${product.category}`} description={product.description}>
   <div class="">
     <div class="image-section">
       <ul class="slider">
         <li data-accName="Item 1" class="slider-item">
           <Image
-        src={urlFor(painting.mainImage).width(1500).height(800).url()}
-        alt={painting.title}
-        width={1500}
-        height={800}
-        loading="eager"
-        fetchpriority="high"
-      />
+            src={urlFor(product.mainImage).width(1500).height(800).url()}
+            alt={product.title}
+            width={1500}
+            height={800}
+            loading="eager"
+            fetchpriority="high"
+          />
         </li>
-        {painting.gallery && painting.gallery.length > 0 && painting.gallery.map((image: any) => (
-          <li data-accName={painting.title} class="slider-item">
+        {product.gallery && product.gallery.length > 0 && product.gallery.map((image: any) => (
+          <li data-accName={product.title} class="slider-item">
             <Image
               src={urlFor(image).width(1500).height(800).url()}
-              alt={`${painting.title} detail`}
+              alt={`${product.title} detail`}
               width={1500}
               height={800}
             />
@@ -71,45 +100,31 @@ if (!painting) {
     </div>
     
     <div class="wrapper region flow">
-      <h1>{painting.title}</h1>
+      <h1>{product.title}</h1>
       
-      <div class="metadata">
-        {painting.medium && <p><strong>Medium:</strong> {painting.medium}</p>}
-        {painting.dimensions && (
-          <p>
-            <strong>Dimensions: </strong> {painting.dimensions.width}" × {painting.dimensions.height}"
-          </p>
-        )}
-        {painting.year && <p><strong>Year:</strong> {painting.year}</p>}
-      </div>
-      
-      {painting.description && (
+      {product.description && (
         <div class="description">
           <h3>Description</h3>
-          <p>{painting.description}</p>
+          <p>{product.description}</p>
         </div>
       )}
       
       <div class="purchase-section flow">
-        <p class="price">${painting.price}</p>
+        <p class="price">{formatProductPrice(product.price)}</p>
         
-        {painting.sold ?  (
-          <button disabled class="sold-button">Sold</button>
+        {!product.inStock ?  (
+          <button disabled class="sold-button">Sold Out</button>
         ) :
           <button
             class="button snipcart-add-item"
-            data-item-id={painting._id}
-            data-item-price={painting.price}
-            data-item-image={painting?.mainImage ? urlFor(painting?.mainImage).url() : ""}
-            data-item-description={painting?.description}
-            data-item-name={painting.title}
+            data-item-id={product._id}
+            data-item-price={product.price / 100}
+            data-item-image={product?.mainImage ? urlFor(product?.mainImage).url() : ""}
+            data-item-description={product?.description}
+            data-item-name={product.title}
           >
             Add to cart
           </button>}
-      </div>
-      
-      <div>
-        <a href="/products" class="back-link">← Back to Gallery</a>
       </div>
     </div>
   </div>

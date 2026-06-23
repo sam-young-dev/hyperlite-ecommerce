@@ -65,3 +65,19 @@
   transform: translateY(5%);
   transition: transform var(--transition-bounce);
 }
+
+.hero__label {
+  --skip-link-color: var(--color-neutral-surface-default);
+  --flow-space: var(--space-xs);
+
+  grid-column: 1;
+  grid-row: 2;
+  z-index: 1;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--size-step-8);
+  text-align: center;
+  text-decoration: none;
+  line-height: var(--leading-fine);
+  color: var(--skip-link-color);
+  max-width: 20ch;
+}

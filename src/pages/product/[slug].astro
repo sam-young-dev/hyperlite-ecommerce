@@ -68,26 +68,6 @@ if (!painting) {
           </li>
           ))}
       </ul>
-
-      <!-- <Image
-        src={urlFor(painting.mainImage).width(1500).height(800).url()}
-        alt={painting.title}
-        width={1500}
-        height={800}
-      /> -->
-      
-      <!-- {painting.gallery && painting.gallery.length > 0 && (
-        <div class="gallery-images">
-          {painting.gallery.map((image: any) => (
-            <Image
-              src={urlFor(image).width(100).height(100).url()}
-              alt={`${painting.title} detail`}
-              width={100}
-              height={100}
-            />
-          ))}
-        </div>
-      )} -->
     </div>
     
     <div class="wrapper region flow">
@@ -105,7 +85,7 @@ if (!painting) {
       
       {painting.description && (
         <div class="description">
-          <h2>About this piece</h2>
+          <h3>Description</h3>
           <p>{painting.description}</p>
         </div>
       )}

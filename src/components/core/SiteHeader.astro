@@ -17,10 +17,49 @@ import { siteData } from '../../data/site-data'
             <a href={item.href} {...(item.current ? {'aria-current': 'page'} : {})}>{item.label}</a>
           </li>
         ))}
-          <li><button class="button snipcart-checkout">Cart</button></li>
+          <li>
+            <button class="snipcart-checkout cart-button">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="9" cy="21" r="1"></circle>
+                <circle cx="20" cy="21" r="1"></circle>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+              </svg>
+              <sup class="cart-count snipcart-items-count">0</sup>
+              <span class="visually-hidden">Shopping cart</span>
+            </button>
+          </li>
         </ul>
       </nav>
     </div>
     <hr/>
   </div>
 </header>
+
+<style>
+  .cart-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: transparent;
+    border: none;
+  }
+
+  .cart-button:hover {
+    cursor: pointer;
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    font-size: 0.75rem;
+    font-weight: normal;
+    line-height: 1;
+    min-width: 1.25rem;
+    padding: 0.125rem 0.25rem;
+    border-radius: 999px;
+    background-color: var(--color-brand-primary);
+    color: var(--color-light, white);
+  }
+</style>

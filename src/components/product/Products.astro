@@ -13,7 +13,7 @@ const { heroImage, products, label } = Astro.props;
   <Hero image={heroImage} height={600} label={label} />
 
   <div class="wrapper region flow"> 
-    <div class="grid" data-layout="thirds">
+    <div class="grid product-grid">
       {products.map((product: any, i: number) => {
         return (<ProductCard href={`/product/${product.slug.current}`} label={product.title}>
           <div class="image-container">

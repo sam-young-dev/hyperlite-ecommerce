@@ -33,7 +33,7 @@ const featuredProducts = await sanityClient. fetch<any[]>(`
 	<div class="region wrapper flow" id="content">
 		<h1 style="max-width: 30ch">Gear For Every Adventure</h1>
 		{featuredProducts.length > 0 && (
-			<div class="grid" style="--grid-item-min: 20.5rem">
+			<div class="grid product-grid">
 				{featuredProducts.map((product: any, i: number) => (
 					<ProductCard href={`/product/${product.slug.current}`} label={product.title}>
           <div class="image-container">

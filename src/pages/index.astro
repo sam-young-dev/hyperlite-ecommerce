@@ -32,7 +32,7 @@ const featuredPaintings = await sanityClient. fetch<Painting[]>(`
 	<div class="region wrapper flow" id="content">
 		{featuredPaintings.length > 0 && (
 			<h2>Featured Works</h2>
-			<div class="grid-auto">
+			<div class="grid">
 				{featuredPaintings.map((painting: Painting) => (
 					<Card href={`/product/${painting.slug.current}`} label={painting.title}>
 						<Image

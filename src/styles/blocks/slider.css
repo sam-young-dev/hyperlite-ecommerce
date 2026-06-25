@@ -1,5 +1,4 @@
 .slider {
-  min-width: 100%;
   padding: 0;
   margin: 0;
   display: flex;
@@ -8,6 +7,8 @@
   scroll-snap-type: x mandatory;
   anchor-name: --my-carousel;
   scroll-marker-group: after;
+
+  min-width: 100%;
   aspect-ratio: 1500 / 800;
 }
 
@@ -46,13 +47,13 @@
   left: calc(anchor(right) - 40px);
 }
 
-.slider::scroll-button(left) {
+/* .slider::scroll-button(left) {
   content: "◄" / "Previous";
 }
 
 .slider::scroll-button(right) {
   content: "►" / "Next";
-}
+} */
 
 .slider::scroll-marker-group {
   position: absolute;

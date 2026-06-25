@@ -1,12 +1,9 @@
 ---
-import { Image } from "@unpic/astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ProductCard from '../components/card/ProductCard.astro';
-import Hero from '../components/hero/Hero.astro'
-import heroImage from '../assets/tents-header.webp';
+import Products from "../components/product/Products.astro";
+import heroImage from '../assets/sleep-header.webp';
 
-import { sanityClient, urlFor } from '../lib/sanity';
-import { formatProductPrice } from '../lib/currency';
+import { sanityClient } from '../lib/sanity';
 
 const products = await sanityClient.fetch<any[]>(`
   *[_type == "product" && category == "sleep"] | order(_createdAt desc) {
@@ -16,6 +13,7 @@ const products = await sanityClient.fetch<any[]>(`
     mainImage,
     price,
     description,
+    shortDescription,
     weight,
     dimensions,
     capacity,
@@ -26,31 +24,5 @@ const products = await sanityClient.fetch<any[]>(`
 ---
 
 <BaseLayout title="Products" description="Browse all available products">
-  <div class="product-container">
-    <Hero image={heroImage} height={600} label="Sleep Systems" />
-  
-    <div class="wrapper region flow"> 
-      <div class="grid-auto">
-        {products.map((product: any, i) => {
-          return (<ProductCard href={`/product/${product.slug.current}`} label={product.title}>
-            <div class="image-container">
-              <Image
-                src={urlFor(product.mainImage).width(800).height(800).url()}
-                alt={product.title}
-                width={800}
-                height={800}
-                loading={i < 4 ? "eager" : null}
-                fetchpriority={i < 4 ? "high" : undefined}
-              />
-            </div>
-            <div class="flow">
-              <h4>{product.title}</h4>
-              <p>{product.capacity}</p>
-              <p>{formatProductPrice(product.price)}</p>
-            </div>
-          </ProductCard>)
-        })}
-      </div>
-    </div>
-  </div>
+  <Products heroImage={heroImage} products={products} label="Sleep Systems"></Products>
 </BaseLayout>

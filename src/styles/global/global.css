@@ -6,7 +6,8 @@
 */
 
 body {
-  background: var(--color-background-base);
+  /* background: var(--color-background-base); */
+  background: white;
   color: var(--color-brand-primary);
   font-size: var(--size-step-1);
   font-family: var(--font-sans);

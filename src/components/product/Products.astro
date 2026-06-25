@@ -1,0 +1,38 @@
+---
+import { Image } from "@unpic/astro";
+import Hero from '../hero/Hero.astro';
+import ProductCard from '../card/ProductCard.astro';
+
+import { urlFor } from '../../lib/sanity';
+import { formatProductPrice } from '../../lib/currency';
+
+const { heroImage, products, label } = Astro.props;
+---
+
+<div class="product-container">
+  <Hero image={heroImage} height={600} label={label} />
+
+  <div class="wrapper region flow"> 
+    <div class="grid" data-layout="thirds">
+      {products.map((product: any, i: any) => {
+        return (<ProductCard href={`/product/${product.slug.current}`} label={product.title}>
+          <div class="image-container">
+            <Image
+              src={urlFor(product.mainImage).width(900).height(900).url()}
+              alt={product.title}
+              width={900}
+              height={900}
+              loading={i < 4 ? "eager" : null}
+              fetchpriority={i < 4 ? "high" : undefined}
+            />
+          </div>
+          <div class="flow">
+            <h4>{product.title}</h4>
+            <p>{product.shortDescription}</p>
+            <p>{formatProductPrice(product.price)}</p>
+          </div>
+        </ProductCard>)
+      })}
+    </div>
+  </div>
+</div>

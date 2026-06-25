@@ -12,4 +12,5 @@
   --radius-l: 2.5rem;
   --uppercase-kerning: 0.04ch;
   --indent-size: var(--space-xs-l);
+  --wrapper-max-width: 1600px;
 }

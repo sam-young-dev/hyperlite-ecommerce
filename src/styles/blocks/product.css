@@ -2,7 +2,23 @@
   background-color: var(--color-neutral-surface-default);
 }
 
+.product-image-container {
+  /* display: grid;
+  grid-template-columns: 1fr 1fr; */
+  display: flex;
+}
+
 .image-section {
-  display: grid;
-  place-items: center;
+  /* display: grid;
+  place-items: center; */
+}
+
+.image-thumb-list {
+  display: flex;
+  gap: 0.5rem;
+  padding-left: 0;
+}
+
+.image-thumb-list-item {
+  list-style-type: none;
 }

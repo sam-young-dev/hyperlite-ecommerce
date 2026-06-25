@@ -22,5 +22,5 @@ const { image, width, height, label, href, showIcon = false} = Astro.props;
       <span class="hero__skip-link-label">{label || siteData.heroIcon.label}</span>
     </a>
   )}
-  {!showIcon && <h1 class="hero__label">{label || siteData.heroIcon.label}</h1>}
+  {!showIcon && <h1 class="hero__label">{label}</h1>}
 </div>

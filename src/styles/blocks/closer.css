@@ -1,9 +1,9 @@
 .closer {
   background: var(--color-interactive-fill-default);
   color: var(--color-foreground-inverse);
-  padding-block: clamp(10rem, 50vb, 20rem) var(--gutter);
+  padding-block: clamp(2rem, 50vb, 4rem) var(--gutter);
   font-weight: var(--font-bold);
-  padding-top: clamp(2rem, 50vb, 8rem);
+  padding-top: clamp(1rem, 50vb, 2rem);
   padding-bottom: 2rem;
 }
 
@@ -14,4 +14,9 @@
   height: auto;
   background: unset;
   padding: unset;
+}
+
+.logo-container {
+  display: grid;
+  place-items: center;
 }

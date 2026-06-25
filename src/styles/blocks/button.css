@@ -38,3 +38,8 @@
   --focus-color: var(--color-brand-dark);
   --corner-secondary-color: var(--color-brand-primary);
 }
+
+.full-width.button {
+  width: 100%;
+  justify-content: center;
+}

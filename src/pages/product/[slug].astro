@@ -44,69 +44,84 @@ if (!product) {
   return Astro.redirect('/');
 }
 
-console.log(product);
+const imageWidth = 562.34;
+const imageHeight = 562.34;
+const imageThumbnailWidth = 60;
+const imageThumbnailHeight = 60;
 ---
 
 <BaseLayout title={`${product.title} - ${product.category}`} description={product.description}>
-  <div class="wrapper">
+  <div class="wrapper region">
     <div class="grid" data-layout='50-50'>
       <div class="image-section">
-        <Image
-            src={urlFor(product.mainImage).width(500).height(600).url()}
-            alt={product.title}
-            width={500}
-            height={600}
-            loading="eager"
-            fetchpriority="high"
-          />
-          <ul class="image-thumb-list">
-            {product.gallery && product.gallery.length > 0 && product.gallery.map((image: any) => (
-              <li data-accName={product.title} class="image-thumb-list-item">
-                <Image
-                  src={urlFor(image).width(60).height(60).url()}
-                  alt={`${product.title} detail`}
-                  width={60}
-                  height={60}
-                />
-              </li>
-              ))}
-          </ul>
-      </div>
+        <input type="radio" name="product-gallery" id="gallery-img-0" class="gallery-radio" checked />
+        {product.gallery && product.gallery.map((_: any, i: number) => (
+          <input type="radio" name="product-gallery" id={`gallery-img-${i + 1}`} class="gallery-radio" />
+        ))}
 
-
-        <!-- <ul class="slider">
-          <li data-accName="Item 1" class="slider-item">
+        <div class="main-image-container">
+          <label for="gallery-img-0" class="main-image-label">
             <Image
-              src={urlFor(product.mainImage).width(500).height(700).url()}
+              src={urlFor(product.mainImage).width(imageWidth).height(imageHeight).url()}
               alt={product.title}
-              width={500}
-              height={700}
+              width={imageWidth}
+              height={imageHeight}
               loading="eager"
               fetchpriority="high"
             />
-          </li>
-          {product.gallery && product.gallery.length > 0 && product.gallery.map((image: any) => (
-            <li data-accName={product.title} class="slider-item">
+          </label>
+          {product.gallery && product.gallery.map((image: any, i: number) => (
+            <label for={`gallery-img-${i + 1}`} class="main-image-label">
               <Image
-                src={urlFor(image).width(800).height(800).url()}
+                src={urlFor(image).width(imageWidth).height(imageHeight).url()}
                 alt={`${product.title} detail`}
-                width={500}
-                height={700}
+                width={imageWidth}
+                height={imageHeight}
               />
+            </label>
+          ))}
+        </div>
+
+        {product.gallery && product.gallery.length > 0 && (
+          <ul class="image-thumb-list">
+            <li class="image-thumb-list-item">
+              <label for="gallery-img-0">
+                <Image
+                  src={urlFor(product.mainImage).width(imageThumbnailWidth).height(imageThumbnailHeight).url()}
+                  alt={product.title}
+                  width={imageThumbnailWidth}
+                  height={imageThumbnailHeight}
+                />
+              </label>
             </li>
+            {product.gallery.map((image: any, i: number) => (
+              <li class="image-thumb-list-item">
+                <label for={`gallery-img-${i + 1}`}>
+                  <Image
+                    src={urlFor(image).width(imageThumbnailWidth).height(imageThumbnailHeight).url()}
+                    alt={`${product.title} detail`}
+                    width={imageThumbnailWidth}
+                    height={imageThumbnailHeight}
+                  />
+                </label>
+              </li>
             ))}
-        </ul> -->
+          </ul>
+        )}
+      </div>
       <div class="flow" style="--flow-space: var(--space-sm)">
-        <h1>{product.title}</h1>
-        <h3>{formatProductPrice(product.price)}</h3>
+        <h2>{product.title}</h2>
+        <h4>{formatProductPrice(product.price)}</h4>
         {product?.quote && <p><small><i>{product.quote}</i></small></p>}
         <p><strong>Weight: </strong>{product.weight.value} {product.weight.unit}</p>
         <p><strong>Volume: </strong>{product.capacity}</p>
+        <p><strong>Availability: </strong>{product.inStock ? 'In stock, ready to ship' : 'Out of stock'}</p>
+        <div class="">
         {!product.inStock ?  (
-            <button disabled class="sold-button">Sold Out</button>
+            <button disabled class="button full-width">Out of Stock</button>
           ) :
             <button
-              class="button snipcart-add-item"
+              class="button full-width snipcart-add-item"
               data-item-id={product._id}
               data-item-price={product.price / 100}
               data-item-image={product?.mainImage ? urlFor(product?.mainImage).url() : ""}
@@ -115,6 +130,7 @@ console.log(product);
             >
               Add to cart
             </button>}
+        </div>
       </div>
     </div>
     <div class="grid" data-layout='50-50'>
@@ -122,7 +138,7 @@ console.log(product);
         <h4>Description</h4>
         <p>{product.description}</p>
       </div>
-      <div>
+      <div class="region">
         <p>testing</p>
       </div>
     </div>

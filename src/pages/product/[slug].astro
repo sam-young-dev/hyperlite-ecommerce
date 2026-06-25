@@ -3,113 +3,143 @@ import { Image } from "@unpic/astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 import { sanityClient, urlFor } from '../../lib/sanity';
-import type { Painting } from '../../types/painting';
+import { formatProductPrice } from '../../lib/currency';
 
 export async function getStaticPaths() {
-  const paintings = await sanityClient.fetch<Painting[]>(`
-    *[_type == "painting"] {
+  const products = await sanityClient.fetch<any[]>(`
+    *[_type == "product"] {
       slug
     }
   `);
   
-  return paintings.map((painting: Painting) => ({
-    params: { slug: painting.slug.current },
+  return products.map((product: any) => ({
+    params: { slug: product.slug.current },
   }));
 }
 
 const { slug } = Astro.params;
 
-const painting = await sanityClient. fetch<Painting>(
-  `*[_type == "painting" && slug. current == $slug][0] {
+const product = await sanityClient. fetch<any>(
+  `*[_type == "product" && slug. current == $slug][0] {
     _id,
     title,
     slug,
     mainImage,
     gallery,
-    description,
     price,
-    medium,
+    description,
+    shortDescription,
+    weight,
     dimensions,
-    year,
-    sold,
-    stripePaymentLink
+    capacity,
+    inStock,
+    featured,
+    category,
+    quote
   }`,
   { slug }
 );
 
-if (!painting) {
-  return Astro.redirect('/gallery');
+if (!product) {
+  return Astro.redirect('/');
 }
 
+const imageWidth = 562.34;
+const imageHeight = 562.34;
+const imageThumbnailWidth = 60;
+const imageThumbnailHeight = 60;
 ---
 
-<BaseLayout title={`${painting.title} - Art Gallery`} description={painting.description}>
-  <div class="">
-    <div class="image-section">
-      <ul class="slider">
-        <li data-accName="Item 1" class="slider-item">
-          <Image
-        src={urlFor(painting.mainImage).width(1500).height(800).url()}
-        alt={painting.title}
-        width={1500}
-        height={800}
-        loading="eager"
-        fetchpriority="high"
-      />
-        </li>
-        {painting.gallery && painting.gallery.length > 0 && painting.gallery.map((image: any) => (
-          <li data-accName={painting.title} class="slider-item">
+<BaseLayout title={`${product.title} - ${product.category}`} description={product.description}>
+  <div class="wrapper region">
+    <div class="grid" data-layout='50-50'>
+      <div class="image-section">
+        <input type="radio" name="product-gallery" id="gallery-img-0" class="gallery-radio" checked />
+        {product.gallery && product.gallery.map((_: any, i: number) => (
+          <input type="radio" name="product-gallery" id={`gallery-img-${i + 1}`} class="gallery-radio" />
+        ))}
+
+        <div class="main-image-container">
+          <label for="gallery-img-0" class="main-image-label">
             <Image
-              src={urlFor(image).width(1500).height(800).url()}
-              alt={`${painting.title} detail`}
-              width={1500}
-              height={800}
+              src={urlFor(product.mainImage).width(imageWidth).height(imageHeight).url()}
+              alt={product.title}
+              width={imageWidth}
+              height={imageHeight}
+              loading="eager"
+              fetchpriority="high"
             />
-          </li>
+          </label>
+          {product.gallery && product.gallery.map((image: any, i: number) => (
+            <label for={`gallery-img-${i + 1}`} class="main-image-label">
+              <Image
+                src={urlFor(image).width(imageWidth).height(imageHeight).url()}
+                alt={`${product.title} detail`}
+                width={imageWidth}
+                height={imageHeight}
+              />
+            </label>
           ))}
-      </ul>
-    </div>
-    
-    <div class="wrapper region flow">
-      <h1>{painting.title}</h1>
-      
-      <div class="metadata">
-        {painting.medium && <p><strong>Medium:</strong> {painting.medium}</p>}
-        {painting.dimensions && (
-          <p>
-            <strong>Dimensions: </strong> {painting.dimensions.width}" × {painting.dimensions.height}"
-          </p>
-        )}
-        {painting.year && <p><strong>Year:</strong> {painting.year}</p>}
-      </div>
-      
-      {painting.description && (
-        <div class="description">
-          <h3>Description</h3>
-          <p>{painting.description}</p>
         </div>
-      )}
-      
-      <div class="purchase-section flow">
-        <p class="price">${painting.price}</p>
-        
-        {painting.sold ?  (
-          <button disabled class="sold-button">Sold</button>
-        ) :
-          <button
-            class="button snipcart-add-item"
-            data-item-id={painting._id}
-            data-item-price={painting.price}
-            data-item-image={painting?.mainImage ? urlFor(painting?.mainImage).url() : ""}
-            data-item-description={painting?.description}
-            data-item-name={painting.title}
-          >
-            Add to cart
-          </button>}
+
+        {product.gallery && product.gallery.length > 0 && (
+          <ul class="image-thumb-list">
+            <li class="image-thumb-list-item">
+              <label for="gallery-img-0">
+                <Image
+                  src={urlFor(product.mainImage).width(imageThumbnailWidth).height(imageThumbnailHeight).url()}
+                  alt={product.title}
+                  width={imageThumbnailWidth}
+                  height={imageThumbnailHeight}
+                />
+              </label>
+            </li>
+            {product.gallery.map((image: any, i: number) => (
+              <li class="image-thumb-list-item">
+                <label for={`gallery-img-${i + 1}`}>
+                  <Image
+                    src={urlFor(image).width(imageThumbnailWidth).height(imageThumbnailHeight).url()}
+                    alt={`${product.title} detail`}
+                    width={imageThumbnailWidth}
+                    height={imageThumbnailHeight}
+                  />
+                </label>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
-      
-      <div>
-        <a href="/products" class="back-link">← Back to Gallery</a>
+      <div class="flow" style="--flow-space: var(--space-sm)">
+        <h2>{product.title}</h2>
+        <h4>{formatProductPrice(product.price)}</h4>
+        {product?.quote && <p><small><i>{product.quote}</i></small></p>}
+        <p><strong>Weight: </strong>{product.weight.value} {product.weight.unit}</p>
+        <p><strong>Volume: </strong>{product.capacity}</p>
+        <p><strong>Availability: </strong>{product.inStock ? 'In stock, ready to ship' : 'Out of stock'}</p>
+        <div class="">
+        {!product.inStock ?  (
+            <button disabled class="button full-width">Out of Stock</button>
+          ) :
+            <button
+              class="button full-width snipcart-add-item"
+              data-item-id={product._id}
+              data-item-price={product.price / 100}
+              data-item-image={product?.mainImage ? urlFor(product?.mainImage).url() : ""}
+              data-item-description={product?.shortDescription}
+              data-item-name={product.title}
+            >
+              Add to cart
+            </button>}
+        </div>
+      </div>
+    </div>
+    <div class="grid" data-layout='50-50'>
+      <div class="region flow">
+        <h4>Description</h4>
+        <p>{product.description}</p>
+      </div>
+      <div class="region">
+        <p>testing</p>
       </div>
     </div>
   </div>

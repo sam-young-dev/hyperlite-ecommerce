@@ -1,53 +1,62 @@
 ---
 import { Image } from "@unpic/astro";
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Masthead from '../components/masthead/Masthead.astro';
 import Hero from '../components/hero/Hero.astro';
-import Card from '../components/card/Card.astro';
+import ProductCard from '../components/card/ProductCard.astro';
+import trailheadImage from '../assets/trailhead-slider.webp';
+import backpackerImage from '../assets/opt-balance-slider.webp';
 
 import { sanityClient, urlFor } from '../lib/sanity';
-import type { Painting } from '../types/painting';
+import { formatProductPrice } from '../lib/currency';
 
-const featuredPaintings = await sanityClient. fetch<Painting[]>(`
-  *[_type == "painting" && featured == true && sold == false] | order(_createdAt desc) [0... 3] {
+const featuredProducts = await sanityClient. fetch<any[]>(`
+  *[_type == "product" && featured == true && inStock == true] | order(_createdAt desc) [0... 5] {
     _id,
     title,
     slug,
     mainImage,
     price,
-    medium
+    description,
+    shortDescription,
+    weight,
+    dimensions,
+    capacity,
+    inStock,
+    featured
   }
 `);
 ---
 
-<BaseLayout title="Art Gallery - Original Paintings" description="Art gallery home page">
-	<div class="region flow">
-		<div class="wrapper">
-			<Masthead />
-		</div>
-		<Hero />
-	</div>
+<BaseLayout title="Hyperlite Mountain Gear | Lightweight, Durable Outdoor Gear" description="Hyperlite Mountain Gear home page">
+	<Hero image={trailheadImage} />
 	
 	<div class="region wrapper flow" id="content">
-		{featuredPaintings.length > 0 && (
-			<h2>Featured Works</h2>
-			<div class="grid-auto">
-				{featuredPaintings.map((painting: Painting) => (
-					<Card href={`/product/${painting.slug.current}`} label={painting.title}>
-						<Image
-							src={urlFor(painting.mainImage).width(800).height(800).url()}
-							alt={painting.title}
-							width={800}
-							height={800}
-							loading="eager"
-        			fetchpriority="high"
-						/>
-						<h3>{painting.title}</h3>
-						<p class="medium">{painting.medium}</p>
-						<p class="price">${painting.price}</p>
-					</Card>
+		<h1 style="max-width: 30ch">Gear For Every Adventure</h1>
+		{featuredProducts.length > 0 && (
+			<div class="grid product-grid">
+				{featuredProducts.map((product: any, i: number) => (
+					<ProductCard href={`/product/${product.slug.current}`} label={product.title}>
+          <div class="image-container">
+            <Image
+              src={urlFor(product.mainImage).width(900).height(900).url()}
+              alt={product.title}
+              width={900}
+              height={900}
+              loading={i < 4 ? "eager" : null}
+              fetchpriority={i < 4 ? "high" : undefined}
+            />
+          </div>
+          <div class="flow">
+            <h4>{product.title}</h4>
+            <p>{product.shortDescription}</p>
+            <p>{formatProductPrice(product.price)}</p>
+          </div>
+        </ProductCard>
 				))}
 			</div>
 		)}
 	</div>
+
+	<Hero image={backpackerImage} height="800" label="THE LEGENDS GET A MAKEOVER" />
+
 </BaseLayout>

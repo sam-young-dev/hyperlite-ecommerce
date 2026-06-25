@@ -1,11 +1,21 @@
 ---
-import BrandExploded from '../../assets/brand-exploded.svg?raw';
+import { Image } from "@unpic/astro";
+import logo from '../../assets/hmg-logo.png';
 import { siteData } from '../../data/site-data'
 ---
 
 <div class="closer">
   <div class="wrapper flow">
-    <span set:html={BrandExploded}></span>
+    <div class="logo-container">
+      <Image
+        src={logo}
+        alt={"logo icon"}
+        width={400}
+        height={400}
+        loading="lazy"
+      />
+    </div>
+
     {siteData.navItems.length > 0 && (
       <nav aria-label="{{ data.navLabel }}" class="nav">
         <ul class="cluster" role="list">

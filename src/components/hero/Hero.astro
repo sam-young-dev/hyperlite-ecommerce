@@ -2,21 +2,25 @@
 import { Image } from '@unpic/astro';
 import ArrowDownIcon from '/src/assets/arrow-down.svg?raw';
 import { siteData } from '../../data/site-data';
-import heroImage from '../../assets/hero.jpg';
+
+const { image, width, height, label, href, showIcon = false} = Astro.props;
 ---
 
 <div class="hero">
   <Image
-    src={heroImage}
+    src={image}
     alt="hero banner"
-    width={2000}
-    height={1200}
+    width={width || 2000}
+    height={height || 1200}
     loading="eager"
     fetchpriority="high"
     draggable="false"
   />
-  <a href={siteData.heroIcon.href} class="hero__skip-link flow">
-    <span class="hero__skip-link-icon"><div class="hero__skip-link-icon__inner" set:html={ArrowDownIcon}></div></span>
-    <span class="hero__skip-link-label">{siteData.heroIcon.label}</span>
-  </a>
+  {showIcon && (
+    <a href={href || siteData.heroIcon.href} class="hero__skip-link flow">
+      <span class="hero__skip-link-icon"><div class="hero__skip-link-icon__inner" set:html={ArrowDownIcon}></div></span>
+      <span class="hero__skip-link-label">{label || siteData.heroIcon.label}</span>
+    </a>
+  )}
+  {!showIcon && <h1 class="hero__label">{label}</h1>}
 </div>

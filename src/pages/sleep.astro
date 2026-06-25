@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Products from "../components/product/Products.astro";
+import heroImage from '../assets/sleep-header.webp';
+
+import { sanityClient } from '../lib/sanity';
+
+const products = await sanityClient.fetch<any[]>(`
+  *[_type == "product" && category == "sleep"] | order(_createdAt desc) {
+    _id,
+    title,
+    slug,
+    mainImage,
+    price,
+    description,
+    shortDescription,
+    weight,
+    dimensions,
+    capacity,
+    inStock,
+    featured
+  }
+`);
+---
+
+<BaseLayout title="Products" description="Browse all available products">
+  <Products heroImage={heroImage} products={products} label="Sleep Systems"></Products>
+</BaseLayout>

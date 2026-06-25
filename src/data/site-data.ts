@@ -1,8 +1,10 @@
 export const siteData = {
-  title: "Sam Studio",
+  title: "Hyperlite Mountain Gear",
   navItems: [
-    { label: "Gallery", href: "/products", current: false },
-    { label: "About", href: "/about" },
+    { label: "Backpacks", href: "/backpacks", current: false },
+    { label: "Tents", href: "/tents" },
+    { label: "Sleep", href: "/sleep" },
+    { label: "Accessories", href: "/accessories" },
   ],
   heroIcon: {
     label: "View Paintings",

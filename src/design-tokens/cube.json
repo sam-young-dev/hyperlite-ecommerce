@@ -32,7 +32,7 @@
     "$description": "Max width for wrapper composition"
   },
   "wrapper-padding-inline": {
-    "$value": "{space.sm}",
+    "$value": "{space.lg}",
     "$description": "Inline padding for wrapper composition"
   },
   "sidebar-content-min-width": {

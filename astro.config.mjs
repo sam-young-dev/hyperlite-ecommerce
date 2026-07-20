@@ -5,17 +5,14 @@ import { imageService } from "@unpic/astro/service";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "http://localhost:4321", // Replace with your actual domain
+  site: "https://sam-studio-6.netlify.app/",
   vite: {
     plugins: [sugarcube()],
   },
   image: {
     domains: ["cdn.sanity.io"],
     service: imageService({
-      // This can usually be auto-detected
-      // fallbackService: "sharp",
       placeholder: "blurhash",
-      // This is the default
       layout: "constrained",
     }),
   },

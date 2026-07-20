@@ -48,6 +48,7 @@ const imageWidth = 562.34;
 const imageHeight = 562.34;
 const imageThumbnailWidth = 60;
 const imageThumbnailHeight = 60;
+const absoluteProductUrl = Astro.url.href;
 ---
 
 <BaseLayout title={`${product.title} - ${product.category}`} description={product.description}>
@@ -123,6 +124,7 @@ const imageThumbnailHeight = 60;
             <button
               class="button full-width snipcart-add-item"
               data-item-id={product._id}
+              data-item-url={absoluteProductUrl}
               data-item-price={product.price / 100}
               data-item-image={product?.mainImage ? urlFor(product?.mainImage).url() : ""}
               data-item-description={product?.shortDescription}
